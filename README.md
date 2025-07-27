@@ -1,58 +1,58 @@
-## Latest updates -- SAM 2: Segment Anything in Images and Videos
+## 最新情報 -- SAM 2: 画像と動画のためのセグメントエニシング
 
-Please check out our new release on [**Segment Anything Model 2 (SAM 2)**](https://github.com/facebookresearch/segment-anything-2).
+[**Segment Anything Model 2 (SAM 2)**](https://github.com/facebookresearch/segment-anything-2) の新しいリリースをぜひご覧ください。
 
-* SAM 2 code: https://github.com/facebookresearch/segment-anything-2
-* SAM 2 demo: https://sam2.metademolab.com/
-* SAM 2 paper: https://arxiv.org/abs/2408.00714
+* SAM 2 コード: https://github.com/facebookresearch/segment-anything-2
+* SAM 2 デモ: https://sam2.metademolab.com/
+* SAM 2 論文: https://arxiv.org/abs/2408.00714
 
- ![SAM 2 architecture](https://github.com/facebookresearch/segment-anything-2/blob/main/assets/model_diagram.png?raw=true)
+![SAM 2 アーキテクチャ](https://github.com/facebookresearch/segment-anything-2/blob/main/assets/model_diagram.png?raw=true)
 
-**Segment Anything Model 2 (SAM 2)** is a foundation model towards solving promptable visual segmentation in images and videos. We extend SAM to video by considering images as a video with a single frame. The model design is a simple transformer architecture with streaming memory for real-time video processing. We build a model-in-the-loop data engine, which improves model and data via user interaction, to collect [**our SA-V dataset**](https://ai.meta.com/datasets/segment-anything-video), the largest video segmentation dataset to date. SAM 2 trained on our data provides strong performance across a wide range of tasks and visual domains.
+**Segment Anything Model 2 (SAM 2)** は、画像や動画におけるプロンプト可能な視覚セグメンテーションの課題解決を目指す基盤モデルです。画像を1フレームの動画として扱うことで、SAMを動画にも拡張しています。モデル設計はシンプルなトランスフォーマーアーキテクチャと、リアルタイム動画処理のためのストリーミングメモリを採用しています。ユーザーインタラクションを通じてモデルとデータを改善する「モデル・イン・ザ・ループ」型のデータエンジンを構築し、[**SA-Vデータセット**](https://ai.meta.com/datasets/segment-anything-video)（これまでで最大規模の動画セグメンテーションデータセット）を収集しました。このデータで学習したSAM 2は、幅広いタスクや視覚ドメインで高い性能を発揮します。
 
 # Segment Anything
 
 **[Meta AI Research, FAIR](https://ai.facebook.com/research/)**
 
-[Alexander Kirillov](https://alexander-kirillov.github.io/), [Eric Mintun](https://ericmintun.github.io/), [Nikhila Ravi](https://nikhilaravi.com/), [Hanzi Mao](https://hanzimao.me/), Chloe Rolland, Laura Gustafson, [Tete Xiao](https://tetexiao.com), [Spencer Whitehead](https://www.spencerwhitehead.com/), Alex Berg, Wan-Yen Lo, [Piotr Dollar](https://pdollar.github.io/), [Ross Girshick](https://www.rossgirshick.info/)
+[Alexander Kirillov](https://alexander-kirillov.github.io/)、[Eric Mintun](https://ericmintun.github.io/)、[Nikhila Ravi](https://nikhilaravi.com/)、[Hanzi Mao](https://hanzimao.me/)、Chloe Rolland、Laura Gustafson、[Tete Xiao](https://tetexiao.com)、[Spencer Whitehead](https://www.spencerwhitehead.com/)、Alex Berg、Wan-Yen Lo、[Piotr Dollar](https://pdollar.github.io/)、[Ross Girshick](https://www.rossgirshick.info/)
 
-[[`Paper`](https://ai.facebook.com/research/publications/segment-anything/)] [[`Project`](https://segment-anything.com/)] [[`Demo`](https://segment-anything.com/demo)] [[`Dataset`](https://segment-anything.com/dataset/index.html)] [[`Blog`](https://ai.facebook.com/blog/segment-anything-foundation-model-image-segmentation/)] [[`BibTeX`](#citing-segment-anything)]
+[[`論文`](https://ai.facebook.com/research/publications/segment-anything/)] [[`プロジェクト`](https://segment-anything.com/)] [[`デモ`](https://segment-anything.com/demo)] [[`データセット`](https://segment-anything.com/dataset/index.html)] [[`ブログ`](https://ai.facebook.com/blog/segment-anything-foundation-model-image-segmentation/)] [[`BibTeX`](#citing-segment-anything)]
 
-![SAM design](assets/model_diagram.png?raw=true)
+![SAM設計図](assets/model_diagram.png?raw=true)
 
-The **Segment Anything Model (SAM)** produces high quality object masks from input prompts such as points or boxes, and it can be used to generate masks for all objects in an image. It has been trained on a [dataset](https://segment-anything.com/dataset/index.html) of 11 million images and 1.1 billion masks, and has strong zero-shot performance on a variety of segmentation tasks.
+**Segment Anything Model (SAM)** は、点やボックスなどの入力プロンプトから高品質なオブジェクトマスクを生成でき、画像内のすべてのオブジェクトのマスクを自動生成することも可能です。1,100万枚の画像と11億個のマスクからなる[データセット](https://segment-anything.com/dataset/index.html)で学習されており、さまざまなセグメンテーションタスクで強力なゼロショット性能を発揮します。
 
 <p float="left">
   <img src="assets/masks1.png?raw=true" width="37.25%" />
   <img src="assets/masks2.jpg?raw=true" width="61.5%" /> 
 </p>
 
-## Installation
+## インストール
 
-The code requires `python>=3.8`, as well as `pytorch>=1.7` and `torchvision>=0.8`. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended.
+このコードは `python>=3.8`、`pytorch>=1.7`、`torchvision>=0.8` が必要です。PyTorchとTorchVisionの依存関係は[こちら](https://pytorch.org/get-started/locally/)の手順に従ってインストールしてください。PyTorchとTorchVisionはCUDA対応でインストールすることを強く推奨します。
 
-Install Segment Anything:
+Segment Anythingのインストール:
 
 ```
 pip install git+https://github.com/facebookresearch/segment-anything.git
 ```
 
-or clone the repository locally and install with
+またはリポジトリをローカルにクローンしてインストールする場合:
 
 ```
 git clone git@github.com:facebookresearch/segment-anything.git
 cd segment-anything; pip install -e .
 ```
 
-The following optional dependencies are necessary for mask post-processing, saving masks in COCO format, the example notebooks, and exporting the model in ONNX format. `jupyter` is also required to run the example notebooks.
+以下の追加依存パッケージは、マスクの後処理、COCO形式でのマスク保存、サンプルノートブックの実行、ONNX形式でのモデルエクスポートに必要です。ノートブックを実行するには`jupyter`も必要です。
 
 ```
 pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
 
-## <a name="GettingStarted"></a>Getting Started
+## <a name="GettingStarted"></a>使い方
 
-First download a [model checkpoint](#model-checkpoints). Then the model can be used in just a few lines to get masks from a given prompt:
+まず[モデルのチェックポイント](#model-checkpoints)をダウンロードしてください。その後、以下の数行でプロンプトからマスクを取得できます。
 
 ```
 from segment_anything import SamPredictor, sam_model_registry
@@ -62,7 +62,7 @@ predictor.set_image(<your_image>)
 masks, _, _ = predictor.predict(<input_prompts>)
 ```
 
-or generate masks for an entire image:
+または画像全体のマスクを自動生成する場合:
 
 ```
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
@@ -71,53 +71,53 @@ mask_generator = SamAutomaticMaskGenerator(sam)
 masks = mask_generator.generate(<your_image>)
 ```
 
-Additionally, masks can be generated for images from the command line:
+さらに、コマンドラインから画像のマスクを生成することもできます:
 
 ```
 python scripts/amg.py --checkpoint <path/to/checkpoint> --model-type <model_type> --input <image_or_folder> --output <path/to/output>
 ```
 
-See the examples notebooks on [using SAM with prompts](/notebooks/predictor_example.ipynb) and [automatically generating masks](/notebooks/automatic_mask_generator_example.ipynb) for more details.
+プロンプトを使ったSAMの利用例や自動マスク生成の詳細は、[サンプルノートブック](/notebooks/predictor_example.ipynb)および[自動マスク生成ノートブック](/notebooks/automatic_mask_generator_example.ipynb)をご覧ください。
 
 <p float="left">
   <img src="assets/notebook1.png?raw=true" width="49.1%" />
   <img src="assets/notebook2.png?raw=true" width="48.9%" />
 </p>
 
-## ONNX Export
+## ONNXエクスポート
 
-SAM's lightweight mask decoder can be exported to ONNX format so that it can be run in any environment that supports ONNX runtime, such as in-browser as showcased in the [demo](https://segment-anything.com/demo). Export the model with
+SAMの軽量なマスクデコーダはONNX形式にエクスポートでき、ONNXランタイムをサポートする任意の環境（ブラウザ上の[デモ](https://segment-anything.com/demo)など）で実行可能です。エクスポートは以下のコマンドで行います。
 
 ```
 python scripts/export_onnx_model.py --checkpoint <path/to/checkpoint> --model-type <model_type> --output <path/to/output>
 ```
 
-See the [example notebook](https://github.com/facebookresearch/segment-anything/blob/main/notebooks/onnx_model_example.ipynb) for details on how to combine image preprocessing via SAM's backbone with mask prediction using the ONNX model. It is recommended to use the latest stable version of PyTorch for ONNX export.
+画像前処理とONNXモデルによるマスク予測の組み合わせについては[サンプルノートブック](https://github.com/facebookresearch/segment-anything/blob/main/notebooks/onnx_model_example.ipynb)を参照してください。ONNXエクスポートにはPyTorchの最新安定版の利用を推奨します。
 
-### Web demo
+### Webデモ
 
-The `demo/` folder has a simple one page React app which shows how to run mask prediction with the exported ONNX model in a web browser with multithreading. Please see [`demo/README.md`](https://github.com/facebookresearch/segment-anything/blob/main/demo/README.md) for more details.
+`demo/` フォルダには、エクスポートしたONNXモデルをWebブラウザ上でマルチスレッドで動作させるシンプルなReactアプリのサンプルがあります。詳細は [`demo/README.md`](https://github.com/facebookresearch/segment-anything/blob/main/demo/README.md) をご覧ください。
 
-## <a name="Models"></a>Model Checkpoints
+## <a name="Models"></a>モデルのチェックポイント
 
-Three model versions of the model are available with different backbone sizes. These models can be instantiated by running
+バックボーンサイズの異なる3種類のモデルが利用可能です。以下のようにしてモデルをインスタンス化できます。
 
 ```
 from segment_anything import sam_model_registry
 sam = sam_model_registry["<model_type>"](checkpoint="<path/to/checkpoint>")
 ```
 
-Click the links below to download the checkpoint for the corresponding model type.
+各モデルタイプに対応するチェックポイントは以下からダウンロードできます。
 
-- **`default` or `vit_h`: [ViT-H SAM model.](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)**
-- `vit_l`: [ViT-L SAM model.](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)
-- `vit_b`: [ViT-B SAM model.](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
+- **`default` または `vit_h`: [ViT-H SAMモデル](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)**
+- `vit_l`: [ViT-L SAMモデル](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)
+- `vit_b`: [ViT-B SAMモデル](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
 
-## Dataset
+## データセット
 
-See [here](https://ai.facebook.com/datasets/segment-anything/) for an overview of the datastet. The dataset can be downloaded [here](https://ai.facebook.com/datasets/segment-anything-downloads/). By downloading the datasets you agree that you have read and accepted the terms of the SA-1B Dataset Research License.
+データセットの概要は[こちら](https://ai.facebook.com/datasets/segment-anything/)をご覧ください。データセットは[こちら](https://ai.facebook.com/datasets/segment-anything-downloads/)からダウンロードできます。ダウンロードすることでSA-1B Dataset Research Licenseの利用規約に同意したものとみなされます。
 
-We save masks per image as a json file. It can be loaded as a dictionary in python in the below format.
+各画像ごとにマスクはjsonファイルとして保存されています。以下の形式でPythonの辞書として読み込めます。
 
 ```python
 {
@@ -126,58 +126,56 @@ We save masks per image as a json file. It can be loaded as a dictionary in pyth
 }
 
 image_info {
-    "image_id"              : int,              # Image id
-    "width"                 : int,              # Image width
-    "height"                : int,              # Image height
-    "file_name"             : str,              # Image filename
+    "image_id"              : int,              # 画像ID
+    "width"                 : int,              # 画像の幅
+    "height"                : int,              # 画像の高さ
+    "file_name"             : str,              # 画像ファイル名
 }
 
 annotation {
-    "id"                    : int,              # Annotation id
-    "segmentation"          : dict,             # Mask saved in COCO RLE format.
-    "bbox"                  : [x, y, w, h],     # The box around the mask, in XYWH format
-    "area"                  : int,              # The area in pixels of the mask
-    "predicted_iou"         : float,            # The model's own prediction of the mask's quality
-    "stability_score"       : float,            # A measure of the mask's quality
-    "crop_box"              : [x, y, w, h],     # The crop of the image used to generate the mask, in XYWH format
-    "point_coords"          : [[x, y]],         # The point coordinates input to the model to generate the mask
+    "id"                    : int,              # アノテーションID
+    "segmentation"          : dict,             # COCO RLE形式で保存されたマスク
+    "bbox"                  : [x, y, w, h],     # マスクを囲むボックス（XYWH形式）
+    "area"                  : int,              # マスクの画素数
+    "predicted_iou"         : float,            # モデルによるマスク品質の予測値
+    "stability_score"       : float,            # マスク品質の指標
+    "crop_box"              : [x, y, w, h],     # マスク生成時に使用した画像のクロップ領域（XYWH形式）
+    "point_coords"          : [[x, y]],         # マスク生成時にモデルへ入力した点座標
 }
 ```
 
-Image ids can be found in sa_images_ids.txt which can be downloaded using the above [link](https://ai.facebook.com/datasets/segment-anything-downloads/) as well.
+画像IDは sa_images_ids.txt に記載されており、上記[リンク](https://ai.facebook.com/datasets/segment-anything-downloads/)からダウンロードできます。
 
-To decode a mask in COCO RLE format into binary:
+COCO RLE形式のマスクをバイナリにデコードするには:
 
 ```
 from pycocotools import mask as mask_utils
 mask = mask_utils.decode(annotation["segmentation"])
 ```
 
-See [here](https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py) for more instructions to manipulate masks stored in RLE format.
+RLE形式マスクの操作方法については[こちら](https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py)も参照してください。
 
-## License
+## ライセンス
 
-The model is licensed under the [Apache 2.0 license](LICENSE).
+本モデルは[Apache 2.0ライセンス](LICENSE)の下で提供されています。
 
-## Contributing
+## コントリビュート
 
-See [contributing](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md).
+[contributing](CONTRIBUTING.md) および [code of conduct](CODE_OF_CONDUCT.md) をご覧ください。
 
-## Contributors
+## 貢献者
 
-The Segment Anything project was made possible with the help of many contributors (alphabetical):
+Segment Anythingプロジェクトは多くの貢献者の協力で実現しました（アルファベット順）:
 
 Aaron Adcock, Vaibhav Aggarwal, Morteza Behrooz, Cheng-Yang Fu, Ashley Gabriel, Ahuva Goldstand, Allen Goodman, Sumanth Gurram, Jiabo Hu, Somya Jain, Devansh Kukreja, Robert Kuo, Joshua Lane, Yanghao Li, Lilian Luong, Jitendra Malik, Mallika Malhotra, William Ngan, Omkar Parkhi, Nikhil Raina, Dirk Rowe, Neil Sejoor, Vanessa Stark, Bala Varadarajan, Bram Wasti, Zachary Winstrom
 
-## Citing Segment Anything
+## Segment Anythingの引用
 
-If you use SAM or SA-1B in your research, please use the following BibTeX entry.
+SAMやSA-1Bを研究で利用する場合は、以下のBibTeXエントリを使用してください。
 
 ```
 @article{kirillov2023segany,
   title={Segment Anything},
   author={Kirillov, Alexander and Mintun, Eric and Ravi, Nikhila and Mao, Hanzi and Rolland, Chloe and Gustafson, Laura and Xiao, Tete and Whitehead, Spencer and Berg, Alexander C. and Lo, Wan-Yen and Doll{\'a}r, Piotr and Girshick, Ross},
   journal={arXiv:2304.02643},
-  year={2023}
-}
-```
+  year
