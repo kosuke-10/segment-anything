@@ -1,32 +1,32 @@
-## Segment Anything Simple Web demo
+## Segment Anything シンプルWebデモ
 
-This **front-end only** React based web demo shows how to load a fixed image and corresponding `.npy` file of the SAM image embedding, and run the SAM ONNX model in the browser using Web Assembly with mulithreading enabled by `SharedArrayBuffer`, Web Worker, and SIMD128.
+この**フロントエンドのみ**のReactベースWebデモは、固定画像と対応するSAM画像埋め込みの`.npy`ファイルを読み込み、SAMのONNXモデルをWebAssembly上でマルチスレッド（`SharedArrayBuffer`、Web Worker、SIMD128）で実行します。
 
 <img src="https://github.com/facebookresearch/segment-anything/raw/main/assets/minidemo.gif" width="500"/>
 
-## Run the app
+## アプリの実行方法
 
-Install Yarn
+Yarnをインストール
 
 ```
 npm install --g yarn
 ```
 
-Build and run:
+ビルド＆起動:
 
 ```
 yarn && yarn start
 ```
 
-Navigate to [`http://localhost:8081/`](http://localhost:8081/)
+[`http://localhost:8081/`](http://localhost:8081/) にアクセスしてください。
 
-Move your cursor around to see the mask prediction update in real time.
+カーソルを動かすと、マスク予測がリアルタイムで更新されます。
 
-## Export the image embedding
+## 画像埋め込みのエクスポート
 
-In the [ONNX Model Example notebook](https://github.com/facebookresearch/segment-anything/blob/main/notebooks/onnx_model_example.ipynb) upload the image of your choice and generate and save corresponding embedding.
+[ONNXモデル例ノートブック](https://github.com/facebookresearch/segment-anything/blob/main/notebooks/onnx_model_example.ipynb)で、任意の画像をアップロードし、対応する埋め込みを生成・保存します。
 
-Initialize the predictor:
+予測器の初期化例:
 
 ```python
 checkpoint = "sam_vit_h_4b8939.pth"
@@ -36,7 +36,7 @@ sam.to(device='cuda')
 predictor = SamPredictor(sam)
 ```
 
-Set the new image and export the embedding:
+新しい画像をセットし、埋め込みをエクスポート:
 
 ```
 image = cv2.imread('src/assets/dogs.jpg')
@@ -45,15 +45,15 @@ image_embedding = predictor.get_image_embedding().cpu().numpy()
 np.save("dogs_embedding.npy", image_embedding)
 ```
 
-Save the new image and embedding in `src/assets/data`.
+新しい画像と埋め込みを`src/assets/data`に保存してください。
 
-## Export the ONNX model
+## ONNXモデルのエクスポート
 
-You also need to export the quantized ONNX model from the [ONNX Model Example notebook](https://github.com/facebookresearch/segment-anything/blob/main/notebooks/onnx_model_example.ipynb).
+[ONNXモデル例ノートブック](https://github.com/facebookresearch/segment-anything/blob/main/notebooks/onnx_model_example.ipynb)で、量子化済みONNXモデルもエクスポートする必要があります。
 
-Run the cell in the notebook which saves the `sam_onnx_quantized_example.onnx` file, download it and copy it to the path `/model/sam_onnx_quantized_example.onnx`.
+ノートブック内のセルを実行して`sam_onnx_quantized_example.onnx`ファイルを保存し、ダウンロードして`/model/sam_onnx_quantized_example.onnx`にコピーしてください。
 
-Here is a snippet of the export/quantization code:
+エクスポート/量子化コード例:
 
 ```
 onnx_model_path = "sam_onnx_example.onnx"
@@ -68,11 +68,11 @@ quantize_dynamic(
 )
 ```
 
-**NOTE: if you change the ONNX model by using a new checkpoint you need to also re-export the embedding.**
+**注意: ONNXモデルを新しいチェックポイントで作り直した場合は、埋め込みも再エクスポートしてください。**
 
-## Update the image, embedding, model in the app
+## アプリ内の画像・埋め込み・モデルの更新
 
-Update the following file paths at the top of`App.tsx`:
+`App.tsx`の冒頭で以下のファイルパスを更新してください:
 
 ```py
 const IMAGE_PATH = "/assets/data/dogs.jpg";
@@ -80,11 +80,11 @@ const IMAGE_EMBEDDING = "/assets/data/dogs_embedding.npy";
 const MODEL_DIR = "/model/sam_onnx_quantized_example.onnx";
 ```
 
-## ONNX multithreading with SharedArrayBuffer
+## SharedArrayBufferによるONNXマルチスレッド
 
-To use multithreading, the appropriate headers need to be set to create a cross origin isolation state which will enable use of `SharedArrayBuffer` (see this [blog post](https://cloudblogs.microsoft.com/opensource/2021/09/02/onnx-runtime-web-running-your-machine-learning-model-in-browser/) for more details)
+マルチスレッドを使うには、適切なヘッダーを設定してクロスオリジン分離状態を作る必要があります。これにより`SharedArrayBuffer`が利用可能になります（詳細は[このブログ記事](https://cloudblogs.microsoft.com/opensource/2021/09/02/onnx-runtime-web-running-your-machine-learning-model-in-browser/)参照）。
 
-The headers below are set in `configs/webpack/dev.js`:
+下記ヘッダーは`configs/webpack/dev.js`で設定されています:
 
 ```js
 headers: {
@@ -93,34 +93,34 @@ headers: {
 }
 ```
 
-## Structure of the app
+## アプリの構成
 
 **`App.tsx`**
 
-- Initializes ONNX model
-- Loads image embedding and image
-- Runs the ONNX model based on input prompts
+- ONNXモデルの初期化
+- 画像埋め込みと画像の読み込み
+- 入力プロンプトに基づきONNXモデルを実行
 
 **`Stage.tsx`**
 
-- Handles mouse move interaction to update the ONNX model prompt
+- マウス移動によるONNXモデルプロンプトの更新を処理
 
 **`Tool.tsx`**
 
-- Renders the image and the mask prediction
+- 画像とマスク予測の描画
 
 **`helpers/maskUtils.tsx`**
 
-- Conversion of ONNX model output from array to an HTMLImageElement
+- ONNXモデル出力の配列からHTMLImageElementへの変換
 
 **`helpers/onnxModelAPI.tsx`**
 
-- Formats the inputs for the ONNX model
+- ONNXモデルへの入力フォーマット
 
 **`helpers/scaleHelper.tsx`**
 
-- Handles image scaling logic for SAM (longest size 1024)
+- SAM用画像スケーリングロジック（最大辺1024）
 
 **`hooks/`**
 
-- Handle shared state for the app
+- アプリの共有状態管理
