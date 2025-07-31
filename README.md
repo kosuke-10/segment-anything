@@ -50,6 +50,15 @@ cd segment-anything; pip install -e .
 pip install opencv-python pycocotools matplotlib onnxruntime onnx
 ```
 
+#### Docker環境での使い方
+
+```
+cd segment-anything
+bash Docker/docker.sh <GPU番号>
+pip install -e .
+```
+
+
 ## <a name="GettingStarted"></a>使い方
 
 まず[モデルのチェックポイント](#model-checkpoints)をダウンロードしてください。その後、以下の数行でプロンプトからマスクを取得できます。

@@ -40,3 +40,10 @@ _darcs
 **/node_modules
 yarn.lock
 package-lock.json
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg

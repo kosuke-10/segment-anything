@@ -25,7 +25,7 @@ CONTAINER_NAME=yoshida_sam${GPU_ID}
 HOST_DIR=/home/yoshida/segment-anything
 CONTAINER_DIR=/segment-anything
 
-docker build --force-rm -t ${IMAGE_NAME} .
+docker build --force-rm -t ${IMAGE_NAME} -f Docker/Dockerfile .
 
 docker run --gpus "device=${GPU_ID}" \
    --shm-size=24g \
